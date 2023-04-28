@@ -120,7 +120,7 @@
   <q-separator />
 
   <div class="q-pa-md">
-    <q-list v-for="(item,idx) in listItems" :key="idx" bordered separator>
+    <q-list v-for="(item, idx) in listItems" :key="idx" bordered separator>
       <q-item clickable v-ripple>
         <q-item-section>{{ idx + 1 }}. {{ item.message }}</q-item-section>
       </q-item>
@@ -139,7 +139,12 @@
   </div>
   <q-separator />
   <div class="q-pa-md">
-    <q-list v-for="({message}, index) in listItems" :key="index" bordered separator>
+    <q-list
+      v-for="({ message }, index) in listItems"
+      :key="index"
+      bordered
+      separator
+    >
       <q-item clickable v-ripple>
         <q-item-section>{{ message }} - {{ index + 1 }}</q-item-section>
       </q-item>
@@ -148,9 +153,17 @@
   <q-separator />
 
   <div class="q-pa-md">
-    <q-list v-for="(item, index) in tupleListItems" :key="index" bordered separator>
+    <q-list
+      v-for="(item, index) in tupleListItems"
+      :key="index"
+      bordered
+      separator
+    >
       <q-item clickable v-ripple>
-        <q-item-section v-for="(childItem, index) in item.children" :key="index">
+        <q-item-section
+          v-for="(childItem, index) in item.children"
+          :key="index"
+        >
           <q-item-section>{{ item.message }} - {{ childItem }}</q-item-section>
         </q-item-section>
       </q-item>
@@ -159,7 +172,12 @@
   <q-separator />
 
   <div class="q-pa-md">
-    <q-list v-for="({message}, index) of listItems" :key="index" bordered separator>
+    <q-list
+      v-for="({ message }, index) of listItems"
+      :key="index"
+      bordered
+      separator
+    >
       <q-item clickable v-ripple>
         <q-item-section>{{ message }} - {{ index }}</q-item-section>
       </q-item>
@@ -189,11 +207,25 @@
     </q-list>
   </div>
   <q-separator />
+  <div class="q-pa-md items-start">
+    <my-component
+      v-for="(item, index) in listItems"
+      :key="index"
+      :item="item"
+      :index="index"
+    ></my-component>
+  </div>
+  <q-separator />
   <!--어레이 교체-->
   <q-card-section>{{ filterItems }}</q-card-section>
   <q-list v-for="n in evenNumbers" :key="n" bordered separator>
     <q-item clickable v-ripple>
       <q-item-section>{{ n }}</q-item-section>
+    </q-item>
+  </q-list>
+  <q-list v-for="(numbers, index) in sets" :key="index" bordered separator>
+    <q-item v-for="n in even(numbers)" :key="n" clickable v-ripple>
+      <q-item-section><q-item-label class="text-h6 text-weight-bolder text-center">{{ n }}</q-item-label></q-item-section>
     </q-item>
   </q-list>
   <q-card-section>{{ reverseNumbers }}</q-card-section>
@@ -243,6 +275,36 @@
   </div>
   <q-separator />
   <div class="q-pa-md row items-start">
+    <q-btn
+      @click="say('안녕')"
+      label="안녕이라고 말하기"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+    <q-btn
+      @click="say('잘가')"
+      label="잘가라고 말하기"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+  </div>
+  <q-separator />
+  <div class="q-pa-md row items-start">
+    <q-btn
+      @click="warn('아직 양식을 제출할 수 없습니다.', $event)"
+      label="아직 양식을 제출할 수 없습니다."
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+    <q-btn
+      @click="(event) => warn('아직 양식을 제출할 수 없습니다1.', event)"
+      label="아직 양식을 제출할 수 없습니다1"
+      color="secondary"
+      class="q-ma-sm"
+    ></q-btn>
+  </div>
+  <q-separator />
+  <div class="q-pa-md row items-start">
     <!--https://vuejs.org/guide/essentials/event-handling.html#event-modifiers-->
     <!--이벤트 수정자 https://hj-tilblog.tistory.com/85-->
     <q-btn label="stop" color="primary" @click.stop="doThis" class="q-ma-sm" />
@@ -267,6 +329,16 @@
       @submit.prevent
       class="q-ma-sm"
     />
+    <q-form
+      label="prevent"
+      color="primary"
+      @submit.prevent
+      class="q-ma-sm"
+    >
+      <q-input v-model="name" />
+      <q-btn label="submit" type="submit"></q-btn>
+    </q-form>
+
     <q-btn label="self" color="primary" @click.self="doThis" class="q-ma-sm" />
     <q-btn
       label="capture"
@@ -278,7 +350,7 @@
     <q-btn
       label="passive"
       color="primary"
-      @click.passive="doThis"
+      @scroll.passive="doThis"
       class="q-ma-sm"
     />
     <!--키 수정자 -->
@@ -339,16 +411,17 @@
   <!--https://vuejs.org/guide/essentials/forms.html#lazy-->
   <div class="q-pa-md row items-start">
     <q-card-section class="col-4">
+      메세지 입력하기 : {{ text }}
       <q-input
         outlined
         bottom-slots
         v-model.lazy="text"
-        label="Label"
+        label="메세지 입력하기"
         counter
         :dense="true"
       >
         <template v-slot:prepend>
-          <q-icon name="place" />
+          <q-icon name="place"/>
         </template>
         <template v-slot:append>
           <q-icon name="close" @click="text = ''" class="cursor-pointer" />
@@ -356,6 +429,16 @@
 
         <template v-slot:hint> Field hint </template>
       </q-input>
+
+      <span>여러 줄 메세지:</span>
+        <p style="white-space: pre-line;">{{ textArea}}</p>
+        <div class="q-pa-md" style="max-width: 300px">
+          <q-input
+            v-model="textArea"
+            filled
+            type="textarea"
+          />
+        </div>
     </q-card-section>
     <!--select  https://quasar.dev/vue-components/select-->
     <q-card-section class="col-4">
@@ -383,6 +466,28 @@
         <template v-slot:hint> Field hint </template>
       </q-select>
     </q-card-section>
+    <!---multiple-->
+    <q-select
+        filled
+        v-model="model2"
+        multiple
+        :options="options"
+        counter
+        max-values="2"
+        hint="Max 2 selections"
+        style="width: 250px"
+      />
+    <!---object-->
+    <q-select
+        filled
+        v-model="model2"
+        multiple
+        :options="options"
+        counter
+        max-values="2"
+        hint="Max 2 selections"
+        style="width: 250px"
+      />
     <!--file https://quasar.dev/vue-components/file-picker-->
     <q-card-section class="col-4">
       <q-file outlined v-model="model" dense>
@@ -434,11 +539,27 @@
       <q-radio v-model="color" val="teal" label="Teal" color="teal" />
       <q-radio v-model="color" val="orange" label="Orange" color="orange" />
       <q-radio v-model="color" val="red" label="Red" color="red" />
+      <q-card-section>
+        {{ color }}
+      </q-card-section>
     </q-card-section>
+    <q-card-section class="col-4 q-mt-md">
+      <q-radio v-model="color1" :val="first" label="Teal" color="teal" />
+      <q-radio v-model="color1" :val="second" label="Orange" color="orange" />
+      <q-card-section>
+        {{ color1 }}
+      </q-card-section>
+    </q-card-section>
+
     <!--toggle https://quasar.dev/vue-components/toggle-->
     <q-card-section class="col-4 q-mt-md">
-      <q-toggle v-model="value" color="green" label="On Right" />
+      <q-toggle v-model="value" color="green" label="On Right"  true-value="네"
+        false-value="아니오"/> {{value}}
     </q-card-section>
+  <q-card-section class="col-4 q-mt-md">
+    <q-toggle v-model="value1" color="green" label="On Right"  :true-value="dynamicTrueValue"
+      :false-value="dynamicFalseValue"/> {{value1}}
+  </q-card-section>
     <!--select https://quasar.dev/vue-components/option-group-->
     <q-card-section class="col-4 q-mt-md">
       <q-option-group
@@ -447,7 +568,9 @@
         color="green"
         type="checkbox"
       />
+      {{ group }}
     </q-card-section>
+
     <!--slider https://quasar.dev/vue-components/slider-->
     <q-card-section class="col-4 q-mt-md">
       <q-badge color="secondary"> Model: {{ standard }} (0 to 50) </q-badge>
@@ -719,6 +842,7 @@
     >
     <!-- <child :class="[baz, boo]"></child> -->
     <q-separator />
+    <div @scroll.passive="onScroll">...</div>
   </div>
 </template>
 
@@ -731,10 +855,12 @@ import DialogCustom from "components/DialogCustom.vue";
 import Archive from "components/tabs/Archive.vue";
 import Home from "components/tabs/Home.vue";
 import Posts from "components/tabs/Posts.vue";
+import MyComponent from "components/MyComponent.vue";
 import { debounce } from "lodash";
 
 export default {
   name: "VueEx",
+  title:"Vue Basic",
   components: {
     Child,
     ClassChild,
@@ -743,6 +869,7 @@ export default {
     Archive,
     Home,
     Posts,
+    MyComponent,
   },
   data() {
     return {
@@ -776,7 +903,10 @@ export default {
       parentMessage: "Parent",
       items: [{ message: "Foo" }, { message: "Bar" }],
       listItems: [{ message: "Foo" }, { message: "Bar" }],
-      tupleListItems: [{ message: "Foo", children:["baby"] }, { message: "Bar",children:['child'] }],
+      tupleListItems: [
+        { message: "Foo", children: ["baby"] },
+        { message: "Bar", children: ["child"] },
+      ],
       myObject: {
         title: "How to do lists in Vue",
         author: "Jane Doe",
@@ -798,11 +928,19 @@ export default {
       text: "",
       options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
       model: null,
+      model2:[],
+      checkboxToggle:true,
+      dynamicTrueValue:"yes",
+			dynamicFalseValue:"No",
+      color1:"",
+      first:"첫번째선택",
+      second:"두번째선택",
       nick: "",
       age: "",
       accept: false,
       color: "",
-      value: true,
+      value: "네",
+      value1: "No",
       group: ["op1"],
       opts: [
         {
@@ -891,12 +1029,14 @@ export default {
         color: "blue",
         fontSize: "35px",
       },
+      textArea:'',
     };
   },
   computed: {
     toTitleDate() {
       const timeStamp = Date.now();
       const formattedString = date.formatDate(timeStamp, "YYYY-MM-DD HH:mm");
+      console.log('formattedString',formattedString)
       return formattedString;
     },
     // 계산된 값을 반환하는 속성
@@ -1045,7 +1185,23 @@ export default {
     },
 
     doThis(event) {
-      console.log("doThis event", event);
+      console.log(event)
+      this.$q.notify({
+        color: "green-5",
+        textColor: "white",
+        icon: "warning",
+        message: `doThis pointerType`,
+      });
+      console.log("doThis pointerType", event);
+    },
+    doThat(event) {
+      this.$q.notify({
+        color: "yellow-5",
+        textColor: "white",
+        icon: "warning",
+        message: `doThat pointerType`,
+      });
+      console.log("doThat event", event);
     },
 
     onSubmit() {
@@ -1127,12 +1283,13 @@ export default {
     calculateDate() {
       setInterval(() => {
         const timeStamp = Date.now();
+        // console.log('timeStamp=======',timeStamp)
         const formattedString = date.formatDate(
           timeStamp,
           "YYYY-MM-DD HH:mm:ss"
         );
         this.str = formattedString;
-      }, 10000000000);
+      }, 1000);
       return this.str;
     },
     increment() {
@@ -1147,6 +1304,47 @@ export default {
     click() {
       console.log(e.message);
     },
+    even(numbers){
+      return numbers.filter(number=> number %2 ===0)
+    },
+    say(message){
+      this.$q
+        .dialog({
+          title: "Alert",
+          message: `${message}`,
+        })
+        .onOk(() => {
+          // console.log('OK')
+        })
+        .onCancel(() => {
+          // console.log('Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
+    warn(message, event){
+      if (event) {
+        event.preventDefault();
+        this.$q
+        .dialog({
+          title: "Alert",
+          message: `${message}`,
+        })
+        .onOk(() => {
+          // console.log('OK')
+        })
+        .onCancel(() => {
+          // console.log('Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+      }
+    },
+    onScroll(e){
+      console.log('e',e)
+    }
   },
 };
 </script>

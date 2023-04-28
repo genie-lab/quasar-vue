@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  props: ["title"],
+  props: ["title"], // 위에서 아래로 주는 부모가 주는 재산
   emits: ["enlarge-text"],
   data() {
     return {};

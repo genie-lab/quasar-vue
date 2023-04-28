@@ -1,12 +1,19 @@
 <template>
-  <q-dialog v-model="dialog" @hide="onDialogHide">
+  <q-dialog v-model="dialog">
     <q-card class="q-dialog-plugin">
       <q-card-section>
-        <div class="text-h6">Our Changing Planet</div>
-        <div class="text-subtitle2">by John Doe</div>
+        <div class="text-h6">내용 수정</div>
+        <div class="text-subtitle2"> {{editTask.id}} </div>
+      </q-card-section>
+      <q-card-section>
+        <q-input
+        v-model="editTask.title"
+        @keyup.enter="onOKClick"
+        ></q-input>
       </q-card-section>
 
-      <slot />
+
+      <!-- <slot /> -->
 
       <!-- buttons example -->
       <q-card-actions align="right">
@@ -30,21 +37,29 @@
 </template>
 
 <script>
+
 export default {
   name: "DialogCustom",
+  props: ['editTask','origin'],
+  emits: ['onInput'],
   data() {
     return {
       dialog: false,
     };
   },
+  mounted(){
+  },
+  watch:{
+  },
   methods: {
     onOKClick() {
+      this.$emit('onInput',this.editTask);
       this.dialog = false;
     },
     onCancelClick() {
+      this.editTask.title =this.origin,
       this.dialog = false;
     },
-    onDialogHide() {},
   },
 };
 </script>

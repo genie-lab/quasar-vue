@@ -1,19 +1,17 @@
-<template>
-  <div class="q-pa-md">
-      <q-item clickable v-ripple>
-        <q-item-section>{{ idx + 1 }}. {{ item.message }}</q-item-section>
+<template row>
+    <q-list bordered >
+      <q-item   clickable v-ripple>
+        <q-item-section class="row items-start">{{ index + 1 }}. {{ item.message }}</q-item-section>
       </q-item>
-  </div>
+    </q-list>
   <q-separator />
 </template>
 
 <script>
 export default {
-  name:'MyComponent',
-  props :{ item, index }
-}
+  name: "MyComponent",
+  props: ["item", "index"],
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

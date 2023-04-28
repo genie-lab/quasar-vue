@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          <q-btn to="/" label="Quasar App" class="text-subtitle1" unelevated></q-btn>
+          <q-btn to="/" label="Vue Study" class="text-subtitle1" unelevated></q-btn>
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -56,12 +56,18 @@ const linksList = [
     icon: 'school',
     link: '/vue'
   },
-  // {
-  //   title: 'Github',
-  //   caption: 'github.com/quasarframework',
-  //   icon: 'code',
-  //   link: 'https://github.com/quasarframework'
-  // },
+  {
+    title: 'Shopping List',
+    caption: 'vue component 실습',
+    icon: 'code',
+    link: '/shop'
+  },
+  {
+    title: 'todo',
+    caption: 'vue + store 실습',
+    icon: 'home',
+    link: '/todo'
+  },
   // {
   //   title: 'Discord Chat Channel',
   //   caption: 'chat.quasar.dev',
