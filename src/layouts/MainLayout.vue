@@ -12,24 +12,21 @@
         />
 
         <q-toolbar-title>
-          <q-btn to="/" label="Vue Study" class="text-subtitle1" unelevated></q-btn>
+          <q-btn
+            to="/"
+            label="Vue Study"
+            class="text-subtitle1"
+            unelevated
+          ></q-btn>
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+        <q-item-label header> Essential Links </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -46,34 +43,34 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { defineComponent, ref } from "vue";
+import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: 'Vue 기초 문법',
-    caption: 'Vue 핵심가이드',
-    icon: 'school',
-    link: '/vue'
+    title: "Vue 기초 문법",
+    caption: "Vue 핵심가이드",
+    icon: "school",
+    link: "/vue",
   },
   {
-    title: 'Shopping List',
-    caption: 'vue component 실습',
-    icon: 'code',
-    link: '/shop'
+    title: "Shopping List",
+    caption: "vue component 실습",
+    icon: "code",
+    link: "/shop",
   },
   {
-    title: 'todo',
-    caption: 'vue + store 실습',
-    icon: 'home',
-    link: '/todo'
+    title: "todo",
+    caption: "vue + store 실습",
+    icon: "home",
+    link: "/todo",
   },
-  // {
-  //   title: 'Discord Chat Channel',
-  //   caption: 'chat.quasar.dev',
-  //   icon: 'chat',
-  //   link: 'https://chat.quasar.dev'
-  // },
+  {
+    title: "db todo list",
+    caption: "vue + database",
+    icon: "chat",
+    link: "/dbtodo",
+  },
   // {
   //   title: 'Forum',
   //   caption: 'forum.quasar.dev',
@@ -98,25 +95,25 @@ const linksList = [
   //   icon: 'favorite',
   //   link: 'https://awesome.quasar.dev'
   // }
-]
+];
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
 
   components: {
-    EssentialLink
+    EssentialLink,
   },
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+  setup() {
+    const leftDrawerOpen = ref(false);
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+    };
+  },
+});
 </script>
