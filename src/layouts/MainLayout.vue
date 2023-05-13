@@ -19,8 +19,9 @@
             unelevated
           ></q-btn>
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-space />
+        <q-btn to="/signin" flat text-color="white" label="회원가입"></q-btn>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 

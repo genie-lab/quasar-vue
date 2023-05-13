@@ -150,7 +150,8 @@ export default defineComponent({
         len,
       };
       const result = await todoApi.list(payload);
-      if (result.data.list) {
+      console.log(result);
+      if (result.data && result.data.list) {
         this.tasks = [...this.tasks, ...result.data.list];
         this.totalCount = result.data.totalCount;
       }
@@ -208,6 +209,9 @@ export default defineComponent({
 
     //더미리스트 만들기
     async resetDb() {
+      if (this.tasks) {
+        this.tasks = [];
+      }
       const payload = {
         title: "todo_",
         done: "N",
