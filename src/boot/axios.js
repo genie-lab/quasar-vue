@@ -3,6 +3,32 @@ import axios from "axios";
 import Config from "../../config";
 import { Notify } from "quasar";
 import { LoadingBar } from "quasar";
+import { Cookies } from "quasar";
+const isDev = process.env.NODE_ENV == "development";
+const config = isDev ? Config.development : Config.production;
+const api = axios.create({ baseURL: config.API_SERVER, withCredentials: true });
+
+// // 요청 인터셉터 추가
+// api.interceptors.request.use(intercepterReq("api", isDev));
+// // 요청 인터셉터 함수
+// function intercepterReq(name, isDev = false) {
+//   return function (config) {
+//     try {
+//       // // 요청을 보내기 전에 수행할 일
+//       // // ...
+//       config.timeout = 60 * 1000;
+//       if (typeof window == "object" && Cookies.has("token")) {
+//         config.headers.Authorization = "Bearer " + Cookies.get("token"); // 서버에서 res.cookie로 넣어준 것 get
+//       }
+//       if (isDev) {
+//         console.log("AJAX intercepterReq", name, config);
+//       }
+//       return config;
+//     } catch (error) {
+//       return Promise.reject(error);
+//     }
+//   };
+// }
 
 function intercepterRes(name, isDev = false) {
   return function (response) {
@@ -38,6 +64,7 @@ function intercepterRes(name, isDev = false) {
           console.log("data.message", data.message);
           Notify.create({
             type: "negative",
+            color: "purple",
             message: data.message,
           }); // error 메시지포함
         } else {
@@ -63,9 +90,6 @@ function intercepterRes(name, isDev = false) {
   };
 }
 
-const isDev = process.env.NODE_ENV == "development";
-const config = isDev ? Config.development : Config.production;
-const api = axios.create({ baseURL: config.API_SERVER, withCredentials: true });
 api.interceptors.response.use(intercepterRes("api", isDev));
 
 export default boot(({ app }) => {

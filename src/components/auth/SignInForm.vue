@@ -9,7 +9,8 @@
     style="width: 300px"
     @reset="reset"
   >
-    <!--https://quasar.dev/vue-components/input/#debouncing-model-->
+    <!--https://quasar.dev/vue-components/input#qinput-api-->
+    <!--https://quasar.dev/vue-components/input#internal-validation-->
     <InputDuplicateCheck
       ref="id"
       dense
@@ -23,9 +24,10 @@
       :origin="form.mb_id"
       :rules="[
         (val) => !!val || '필수입력입니다',
+        (val) => val.length >= 3 || '3자 이상 적으세요',
         (val) =>
           !!val
-            ? /^[a-zA-Z0-9_]{1,29}$/.test(val) ||
+            ? /^[a-zA-Z0-9_]{1,105}$/.test(val) ||
               `영어와 숫자만 입력하세요, 10자 이내`
             : true,
       ]"
@@ -55,9 +57,10 @@
       debounce
       :cbCheck="cbCheckEmail"
     >
-      <template v-slot:prepend>
+      <!-- <template #prepend>
         <q-icon name="mail" />
-      </template>
+      </template> -->
+      <q-icon name="person"></q-icon>
     </InputDuplicateCheck>
 
     <InputPassword
@@ -99,11 +102,14 @@
     ></InputPassword>
 
     <InputFile
+      label="프로필 업로드"
+      counter
+      max-files="1"
+      accept=".jpg, .jpeg, .png, image/*"
       dense
       rounded
       outlined
       bottom-slot
-      multiple
       hint="프로필 수정"
       v-model="form.mb_image"
     >
@@ -162,7 +168,6 @@ export default defineComponent({
         mb_id: "",
         mb_password: "",
         mb_email: "",
-        mb_phone: "",
         mb_image: null,
       };
       this.form = form;
@@ -170,12 +175,12 @@ export default defineComponent({
 
     reset() {
       this.init();
-      this.$emit("reset");
     },
     async save() {
       this.$refs.form.validate(); // 기본제공
       await this.$nextTick(); // nextTick은 이거처리하고 다음것 내려가라
       if (this.$refs.id.validate()) return;
+      if (this.$refs.email.validate()) return;
 
       // image format때문에 formdata로 넘겨야함
       const formData = new FormData();

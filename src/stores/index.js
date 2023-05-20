@@ -1,5 +1,5 @@
-import { store } from 'quasar/wrappers'
-import { createPinia } from 'pinia'
+import { store } from "quasar/wrappers";
+import { createPinia } from "pinia";
 
 /*
  * If not building with SSR mode, you can
@@ -9,12 +9,17 @@ import { createPinia } from 'pinia'
  * async/await or return a Promise which resolves
  * with the Store instance.
  */
+// import { createPinia } from "pinia";
+// 새로고침시 상태유지 https://github.com/prazdevs/pinia-plugin-persistedstate
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 
-export default store((/* { ssrContext } */) => {
-  const pinia = createPinia()
+// const pinia = createPinia();
+// pinia.use(piniaPluginPersistedstate);
 
+export default store(({ ssrContext }) => {
+  const pinia = createPinia();
   // You can add Pinia plugins here
-  // pinia.use(SomePiniaPlugin)
+  pinia.use(piniaPluginPersistedstate);
 
-  return pinia
-})
+  return pinia;
+});

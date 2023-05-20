@@ -155,8 +155,6 @@ export default defineComponent({
         this.tasks = [...this.tasks, ...result.data.list];
         this.totalCount = result.data.totalCount;
       }
-      // this.tasks = [];
-      // this.totalCount = 0;
     },
 
     //intersection

@@ -8,11 +8,11 @@
     :error-message="errMsg"
     :no-error-icon="error"
   >
-    <template v-slot:prepend>
+    <template #prepend>
       <q-icon name="person" />
     </template>
 
-    <template v-slot:append>
+    <template #append>
       <q-btn
         v-if="isCheck"
         :loading="iconLoading"
@@ -27,7 +27,6 @@
       </q-btn>
     </template>
   </q-input>
-  <div></div>
 </template>
 
 <script>
@@ -45,9 +44,8 @@ export default defineComponent({
       default: null,
     },
     origin: String,
-    isLoading: Boolean,
   },
-  emits: ["update:modelValue", "outFocus"],
+  emits: ["update:modelValue"],
   mounted() {},
   created() {
     // console.log(this.modelModifiers) // {trim: true}
@@ -71,6 +69,7 @@ export default defineComponent({
   computed: {},
   methods: {
     onInput(val) {
+      console.log(this.origin === val);
       this.isCheck = this.origin ? this.origin === val : !this.cbCheck; // 아이콘 보이게
       this.errMsg = "";
       this.$emit("update:modelValue", val);

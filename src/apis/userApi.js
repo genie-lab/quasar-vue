@@ -5,9 +5,7 @@ const userRouter = `/api/member`;
 const token = {
   create: null,
   duplicateCheck: null,
-  update: null,
-  remove: null,
-  reset: null,
+  login: null,
 };
 
 const create = async (form) => {
@@ -42,17 +40,16 @@ const duplicateCheck = async (url) => {
   }
 };
 
-const update = async (payload) => {
+const login = async (form) => {
   try {
-    //token
-    if (token.update != null) {
-      token.update = token.update.cancel("update cancel");
+    if (token.login != null) {
+      token.login.cancel("login cancel");
     }
-    token.update = axios.CancelToken.source();
-    const id = payload.id;
-    const result = api.put(`${memberRouter}/${id}`, payload, {
-      cancelToken: token.update.token,
+    token.login = axios.CancelToken.source();
+    const result = await api.post(`${userRouter}/loginLocal`, form, {
+      cancelToken: token.login.token,
     });
+    console.log("axios result", result);
     return result;
   } catch (error) {
     console.error({ err: error });
@@ -60,38 +57,4 @@ const update = async (payload) => {
   }
 };
 
-const remove = async (payload) => {
-  try {
-    //token
-    if (token.remove != null) {
-      token.remove = token.remove.cancel("remove cancel");
-    }
-    token.remove = axios.CancelToken.source();
-    const id = payload.id;
-    const result = api.delete(`${memberRouter}/${id}`, {
-      cancelToken: token.remove.token,
-    });
-    return result;
-  } catch (error) {
-    console.error({ err: error });
-    return false;
-  }
-};
-
-const reset = async (payload) => {
-  try {
-    if (token.reset != null) {
-      token.reset = token.reset.cancel("reset cancel");
-    }
-    token.reset = axios.CancelToken.source(); // 중복이벤트시 취소할수 있는 함수
-    const result = await api.post(`${memberRouter}/reset`, payload, {
-      cancelToken: token.reset.token,
-    });
-    return result;
-  } catch (error) {
-    console.error({ err: error });
-    return false;
-  }
-};
-
-export default { create, duplicateCheck, update, remove, reset };
+export default { create, duplicateCheck, login };

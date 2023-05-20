@@ -1,16 +1,14 @@
 <template>
-  <!--v-bind 약어 : 로 :model-value 가져옴 단방향     @update:model-value="val => { file = val }"
--->
   <q-input
     v-bind="$attrs"
     :model-value="modelValue"
     @update:model-value="onInput"
     :type="type ? 'password' : 'text'"
   >
-    <template v-slot:prepend>
+    <template #prepend>
       <q-icon name="key" />
     </template>
-    <template v-slot:append>
+    <template #append>
       <q-icon
         :name="type ? 'visibility_off' : 'visibility'"
         class="cursor-pointer"
@@ -21,7 +19,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "inputPassword",
   emits: ["update:modelValue"],
   props: {
@@ -41,7 +41,7 @@ export default {
       this.$emit("update:modelValue", val);
     },
   },
-};
+});
 </script>
 
 <style></style>
