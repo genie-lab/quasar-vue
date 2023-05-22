@@ -225,7 +225,11 @@
   </q-list>
   <q-list v-for="(numbers, index) in sets" :key="index" bordered separator>
     <q-item v-for="n in even(numbers)" :key="n" clickable v-ripple>
-      <q-item-section><q-item-label class="text-h6 text-weight-bolder text-center">{{ n }}</q-item-label></q-item-section>
+      <q-item-section
+        ><q-item-label class="text-h6 text-weight-bolder text-center">{{
+          n
+        }}</q-item-label></q-item-section
+      >
     </q-item>
   </q-list>
   <q-card-section>{{ reverseNumbers }}</q-card-section>
@@ -329,12 +333,7 @@
       @submit.prevent
       class="q-ma-sm"
     />
-    <q-form
-      label="prevent"
-      color="primary"
-      @submit.prevent
-      class="q-ma-sm"
-    >
+    <q-form label="prevent" color="primary" @submit.prevent class="q-ma-sm">
       <q-input v-model="name" />
       <q-btn label="submit" type="submit"></q-btn>
     </q-form>
@@ -421,7 +420,7 @@
         :dense="true"
       >
         <template v-slot:prepend>
-          <q-icon name="place"/>
+          <q-icon name="place" />
         </template>
         <template v-slot:append>
           <q-icon name="close" @click="text = ''" class="cursor-pointer" />
@@ -431,14 +430,10 @@
       </q-input>
 
       <span>여러 줄 메세지:</span>
-        <p style="white-space: pre-line;">{{ textArea}}</p>
-        <div class="q-pa-md" style="max-width: 300px">
-          <q-input
-            v-model="textArea"
-            filled
-            type="textarea"
-          />
-        </div>
+      <p style="white-space: pre-line">{{ textArea }}</p>
+      <div class="q-pa-md" style="max-width: 300px">
+        <q-input v-model="textArea" filled type="textarea" />
+      </div>
     </q-card-section>
     <!--select  https://quasar.dev/vue-components/select-->
     <q-card-section class="col-4">
@@ -468,26 +463,26 @@
     </q-card-section>
     <!---multiple-->
     <q-select
-        filled
-        v-model="model2"
-        multiple
-        :options="options"
-        counter
-        max-values="2"
-        hint="Max 2 selections"
-        style="width: 250px"
-      />
+      filled
+      v-model="model2"
+      multiple
+      :options="options"
+      counter
+      max-values="2"
+      hint="Max 2 selections"
+      style="width: 250px"
+    />
     <!---object-->
     <q-select
-        filled
-        v-model="model2"
-        multiple
-        :options="options"
-        counter
-        max-values="2"
-        hint="Max 2 selections"
-        style="width: 250px"
-      />
+      filled
+      v-model="model2"
+      multiple
+      :options="options"
+      counter
+      max-values="2"
+      hint="Max 2 selections"
+      style="width: 250px"
+    />
     <!--file https://quasar.dev/vue-components/file-picker-->
     <q-card-section class="col-4">
       <q-file outlined v-model="model" dense>
@@ -553,13 +548,25 @@
 
     <!--toggle https://quasar.dev/vue-components/toggle-->
     <q-card-section class="col-4 q-mt-md">
-      <q-toggle v-model="value" color="green" label="On Right"  true-value="네"
-        false-value="아니오"/> {{value}}
+      <q-toggle
+        v-model="value"
+        color="green"
+        label="On Right"
+        true-value="네"
+        false-value="아니오"
+      />
+      {{ value }}
     </q-card-section>
-  <q-card-section class="col-4 q-mt-md">
-    <q-toggle v-model="value1" color="green" label="On Right"  :true-value="dynamicTrueValue"
-      :false-value="dynamicFalseValue"/> {{value1}}
-  </q-card-section>
+    <q-card-section class="col-4 q-mt-md">
+      <q-toggle
+        v-model="value1"
+        color="green"
+        label="On Right"
+        :true-value="dynamicTrueValue"
+        :false-value="dynamicFalseValue"
+      />
+      {{ value1 }}
+    </q-card-section>
     <!--select https://quasar.dev/vue-components/option-group-->
     <q-card-section class="col-4 q-mt-md">
       <q-option-group
@@ -860,7 +867,7 @@ import { debounce } from "lodash";
 
 export default {
   name: "VueEx",
-  title:"Vue Basic",
+  title: "Vue Basic",
   components: {
     Child,
     ClassChild,
@@ -928,13 +935,13 @@ export default {
       text: "",
       options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
       model: null,
-      model2:[],
-      checkboxToggle:true,
-      dynamicTrueValue:"yes",
-			dynamicFalseValue:"No",
-      color1:"",
-      first:"첫번째선택",
-      second:"두번째선택",
+      model2: [],
+      checkboxToggle: true,
+      dynamicTrueValue: "yes",
+      dynamicFalseValue: "No",
+      color1: "",
+      first: "첫번째선택",
+      second: "두번째선택",
       nick: "",
       age: "",
       accept: false,
@@ -1029,14 +1036,14 @@ export default {
         color: "blue",
         fontSize: "35px",
       },
-      textArea:'',
+      textArea: "",
     };
   },
   computed: {
     toTitleDate() {
       const timeStamp = Date.now();
       const formattedString = date.formatDate(timeStamp, "YYYY-MM-DD HH:mm");
-      console.log('formattedString',formattedString)
+      console.log("formattedString", formattedString);
       return formattedString;
     },
     // 계산된 값을 반환하는 속성
@@ -1185,7 +1192,7 @@ export default {
     },
 
     doThis(event) {
-      console.log(event)
+      console.log(event);
       this.$q.notify({
         color: "green-5",
         textColor: "white",
@@ -1304,10 +1311,10 @@ export default {
     click() {
       console.log(e.message);
     },
-    even(numbers){
-      return numbers.filter(number=> number %2 ===0)
+    even(numbers) {
+      return numbers.filter((number) => number % 2 === 0);
     },
-    say(message){
+    say(message) {
       this.$q
         .dialog({
           title: "Alert",
@@ -1323,28 +1330,28 @@ export default {
           // console.log('I am triggered on both OK and Cancel')
         });
     },
-    warn(message, event){
+    warn(message, event) {
       if (event) {
         event.preventDefault();
         this.$q
-        .dialog({
-          title: "Alert",
-          message: `${message}`,
-        })
-        .onOk(() => {
-          // console.log('OK')
-        })
-        .onCancel(() => {
-          // console.log('Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
+          .dialog({
+            title: "Alert",
+            message: `${message}`,
+          })
+          .onOk(() => {
+            // console.log('OK')
+          })
+          .onCancel(() => {
+            // console.log('Cancel')
+          })
+          .onDismiss(() => {
+            // console.log('I am triggered on both OK and Cancel')
+          });
       }
     },
-    onScroll(e){
-      console.log('e',e)
-    }
+    onScroll(e) {
+      console.log("e", e);
+    },
   },
 };
 </script>

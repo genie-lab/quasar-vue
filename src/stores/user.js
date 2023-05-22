@@ -5,7 +5,14 @@ export const useUserStore = defineStore("user", {
     member: null,
   }),
   persist: true,
-  getters: {},
+  getters: {
+    isLoggedIn(state) {
+      if (state.member) {
+        return true;
+      }
+      return false;
+    },
+  },
   actions: {
     async loginLocal(form) {
       const result = await userApi.login(form);
